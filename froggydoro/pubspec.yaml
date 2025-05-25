@@ -91,6 +91,12 @@ flutter:
     - assets/froggy.png
     - assets/rest_froggy.png
     - assets/Book.png
+    - assets/froggy/rest_compuper_froggy.png
+    - assets/froggy/work_compuper_froggy.png
+    - assets/froggy/rest_glass_froggy.png
+    - assets/froggy/work_glass_froggy.png
+    - assets/froggy/rest_music_froggy.png
+    - assets/froggy/work_booky_froggy.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
