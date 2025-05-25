@@ -5,6 +5,7 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'package:froggydoro/models/timer_object.dart';
 import 'package:froggydoro/providers/theme_provider.dart';
+import 'package:froggydoro/providers/froggy_theme_provider.dart';
 import 'package:froggydoro/screens/session_selection_screen.dart';
 import 'package:froggydoro/services/database_service.dart';
 import 'package:froggydoro/services/preferences_service.dart';
@@ -160,6 +161,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           buildChangeAmbienceSetting(),
           const SizedBox(height: 10),
           buildResetButton(context),
+          const SizedBox(height: 20),
+          buildChangeFroggyThemeSetting(),
         ],
       ),
     );
@@ -478,6 +481,132 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  /// Builds the UI for changing the froggy companion theme.
+  Widget buildChangeFroggyThemeSetting() {
+    final froggyTheme = ref.watch(froggyThemeProvider);
+    final froggyThemeNotifier = ref.read(froggyThemeProvider.notifier);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Froggy Companion',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: _getTextColor(context),
+          ),
+        ),
+        SizedBox(height: 10),
+        SettingsTile(
+          title: 'Froggy Theme',
+          subtitle: froggyTheme.name,
+          trailingIcon: Icons.arrow_drop_down,
+          onTap: () {
+            _showFroggyThemeBottomSheet(context, froggyThemeNotifier);
+          },
+        ),
+      ],
+    );
+  }
+
+  /// Displays the bottom sheet for selecting the froggy companion theme.
+  void _showFroggyThemeBottomSheet(
+    BuildContext context,
+    FroggyThemeNotifier notifier,
+  ) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return Container(
+          padding: const EdgeInsets.all(16),
+          height: MediaQuery.of(context).size.height * 0.6,
+          child: Column(
+            children: [
+              Text(
+                'Choose Your Froggy Companion',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: _getTextColor(context),
+                ),
+              ),
+              SizedBox(height: 16),
+              Expanded(
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
+                    childAspectRatio: 0.8,
+                  ),
+                  itemCount: FroggyThemeNotifier.availableThemes.length,
+                  itemBuilder: (context, index) {
+                    final theme = FroggyThemeNotifier.availableThemes[index];
+                    final isSelected =
+                        ref.watch(froggyThemeProvider).name == theme.name;
+
+                    return GestureDetector(
+                      onTap: () async {
+                        await notifier.setFroggyTheme(theme);
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: _getBackgroundBlockColor(context),
+                          borderRadius: BorderRadius.circular(12),
+                          border:
+                              isSelected
+                                  ? Border.all(
+                                    color: _getTextColor(context),
+                                    width: 2,
+                                  )
+                                  : null,
+                        ),
+                        padding: EdgeInsets.all(12),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: Image.asset(
+                                theme.workImage,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              theme.name,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: _getTextColor(context),
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 4),
+                            Text(
+                              theme.description,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: _getTextColor(context).withOpacity(0.7),
+                              ),
+                              textAlign: TextAlign.center,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
