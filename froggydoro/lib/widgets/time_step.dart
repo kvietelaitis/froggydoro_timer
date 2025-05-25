@@ -49,10 +49,7 @@ class TimeStep extends StatelessWidget {
               ),
               Text(
                 unit != null ? '$value $unit' : '$value',
-                style: TextStyle(
-                  fontSize: 17,
-                  color: textColor,
-                ),
+                style: TextStyle(fontSize: 17, color: textColor),
               ),
               IconButton(
                 icon: const Icon(Icons.chevron_right),

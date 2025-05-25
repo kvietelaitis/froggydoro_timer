@@ -17,15 +17,18 @@ class AchievementPopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
-    final backgroundColor = brightness == Brightness.dark
-        ? const Color(0xFF3F5738)
-        : const Color(0xFFF1F3E5);
-    final textColor = brightness == Brightness.dark
-        ? const Color(0xFFB0C8AE)
-        : const Color(0xFF586F51);
-    final buttonColor = brightness == Brightness.dark
-        ? const Color(0xFFB0C8AE)
-        : const Color(0xFF586F51);
+    final backgroundColor =
+        brightness == Brightness.dark
+            ? const Color(0xFF3F5738)
+            : const Color(0xFFF1F3E5);
+    final textColor =
+        brightness == Brightness.dark
+            ? const Color(0xFFB0C8AE)
+            : const Color(0xFF586F51);
+    final buttonColor =
+        brightness == Brightness.dark
+            ? const Color(0xFFB0C8AE)
+            : const Color(0xFF586F51);
 
     return Dialog(
       backgroundColor: backgroundColor,
@@ -35,11 +38,7 @@ class AchievementPopup extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(
-              Icons.emoji_events,
-              size: 56,
-              color: Colors.amber,
-            ),
+            const Icon(Icons.emoji_events, size: 56, color: Colors.amber),
             const SizedBox(height: 16),
             Text(
               'Achievement Unlocked!',
@@ -63,10 +62,7 @@ class AchievementPopup extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               description,
-              style: TextStyle(
-                fontSize: 16,
-                color: textColor,
-              ),
+              style: TextStyle(fontSize: 16, color: textColor),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
@@ -74,7 +70,10 @@ class AchievementPopup extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: buttonColor,
                 foregroundColor: backgroundColor,
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 16,
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -82,10 +81,7 @@ class AchievementPopup extends StatelessWidget {
               onPressed: onClose,
               child: const Text(
                 'Awesome!',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),
           ],

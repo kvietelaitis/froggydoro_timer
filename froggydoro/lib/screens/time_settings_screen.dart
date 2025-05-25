@@ -64,28 +64,28 @@ class _TimeSettingsScreenState extends State<TimeSettingsScreen> {
     Navigator.pop(context);
   }
 
-Color _getTextColor(BuildContext context) {
-  final brightness = Theme.of(context).brightness;
-  return brightness == Brightness.dark
-      ? const Color(0xFFABC2A9) 
-      : const Color(0xFF586F51);
-      //? Colors.white 
-      //: Colors.black; 
-}
+  Color _getTextColor(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+    return brightness == Brightness.dark
+        ? const Color(0xFFABC2A9)
+        : const Color(0xFF586F51);
+    //? Colors.white
+    //: Colors.black;
+  }
 
-Color _getBackgroundBlockColor(BuildContext context) {
-  final brightness = Theme.of(context).brightness;
-  return brightness == Brightness.dark
-      ? const Color(0xFF3A4A38)
-      : const Color(0xFFE4E8CD);
-}
+  Color _getBackgroundBlockColor(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+    return brightness == Brightness.dark
+        ? const Color(0xFF3A4A38)
+        : const Color(0xFFE4E8CD);
+  }
 
-Color _getCardColor(BuildContext context) {
-  final brightness = Theme.of(context).brightness;
-  return brightness == Brightness.dark
-      ? const Color(0xFF586F51)
-      : Theme.of(context).cardColor;
-}
+  Color _getCardColor(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+    return brightness == Brightness.dark
+        ? const Color(0xFF586F51)
+        : Theme.of(context).cardColor;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +137,11 @@ Color _getCardColor(BuildContext context) {
                     Row(
                       children: [
                         IconButton(
-                          icon: Icon(Icons.arrow_back, color: textColor, size: 28),
+                          icon: Icon(
+                            Icons.arrow_back,
+                            color: textColor,
+                            size: 28,
+                          ),
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(),
                           onPressed: () => Navigator.of(context).pop(),
@@ -183,9 +187,13 @@ Color _getCardColor(BuildContext context) {
                                 textAlign: TextAlign.right,
                                 decoration: InputDecoration.collapsed(
                                   hintText: "Enter name",
-                                  hintStyle: TextStyle(color: textColor.withOpacity(0.85)),
+                                  hintStyle: TextStyle(
+                                    color: textColor.withOpacity(0.85),
+                                  ),
                                 ),
-                                style: TextStyle(color: textColor.withOpacity(0.85)),
+                                style: TextStyle(
+                                  color: textColor.withOpacity(0.85),
+                                ),
                                 cursorColor: textColor,
                               ),
                             ),
@@ -196,7 +204,10 @@ Color _getCardColor(BuildContext context) {
 
                     // Work Duration
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
                       margin: const EdgeInsets.only(bottom: 8),
                       decoration: BoxDecoration(
                         color: cardColor,
@@ -213,7 +224,10 @@ Color _getCardColor(BuildContext context) {
 
                     // Break Duration
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
                       margin: const EdgeInsets.only(bottom: 8),
                       decoration: BoxDecoration(
                         color: cardColor,
@@ -230,7 +244,10 @@ Color _getCardColor(BuildContext context) {
 
                     // Round Count
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
                       margin: const EdgeInsets.only(bottom: 8),
                       decoration: BoxDecoration(
                         color: cardColor,
@@ -281,7 +298,6 @@ Color _getCardColor(BuildContext context) {
       ),
     );
   }
-
 
   // Increments work time by 5 minutes, up to a maximum of 60 minutes
   void addWorkTime() {

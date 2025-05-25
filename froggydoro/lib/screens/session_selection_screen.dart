@@ -171,12 +171,12 @@ class _SessionSelectionScreenState extends State<SessionSelectionScreen> {
     );
   }
 
-Color _getTextColor(BuildContext context) {
-  final brightness = Theme.of(context).brightness;
-  return brightness == Brightness.dark
-      ? const Color(0xFFABC2A9) 
-      : const Color(0xFF586F51);
-}
+  Color _getTextColor(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+    return brightness == Brightness.dark
+        ? const Color(0xFFABC2A9)
+        : const Color(0xFF586F51);
+  }
 
   Color _getIconColor(BuildContext context) {
     return _getTextColor(context);
@@ -184,12 +184,16 @@ Color _getTextColor(BuildContext context) {
 
   Color _getBackgroundBlockColor(BuildContext context) {
     final brightness = Theme.of(context).brightness;
-    return brightness == Brightness.dark ? const Color(0xFF3A4A38) : const Color(0xFFE4E8CD);
+    return brightness == Brightness.dark
+        ? const Color(0xFF3A4A38)
+        : const Color(0xFFE4E8CD);
   }
 
   Color _getCardColor(BuildContext context) {
     final brightness = Theme.of(context).brightness;
-    return brightness == Brightness.dark ? const Color(0xFF586F51) : Theme.of(context).cardColor;
+    return brightness == Brightness.dark
+        ? const Color(0xFF586F51)
+        : Theme.of(context).cardColor;
   }
 
   Color _getBorderColor() {
@@ -246,7 +250,11 @@ Color _getTextColor(BuildContext context) {
                   Row(
                     children: [
                       IconButton(
-                        icon: Icon(Icons.arrow_back, color: iconColor, size: 28),
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: iconColor,
+                          size: 28,
+                        ),
                         onPressed: () => Navigator.of(context).pop(),
                       ),
                       const SizedBox(width: 8),
@@ -275,7 +283,10 @@ Color _getTextColor(BuildContext context) {
                   final preset = _presets[index];
                   return Container(
                     margin: const EdgeInsets.symmetric(vertical: 4.0),
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12.0,
+                      vertical: 4.0,
+                    ),
                     decoration: BoxDecoration(
                       color: cardColor,
                       border: Border.all(color: Colors.grey.shade400),
@@ -283,7 +294,10 @@ Color _getTextColor(BuildContext context) {
                     ),
                     child: ListTile(
                       dense: true,
-                      visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
+                      visualDensity: const VisualDensity(
+                        horizontal: 0,
+                        vertical: -4,
+                      ),
                       contentPadding: EdgeInsets.zero,
                       title: Text(
                         preset.name,
@@ -312,11 +326,23 @@ Color _getTextColor(BuildContext context) {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            icon: Icon(Icons.delete, color: iconColor, size: 24),
-                            onPressed: () => _showResetConfirmationDialog(context, preset),
+                            icon: Icon(
+                              Icons.delete,
+                              color: iconColor,
+                              size: 24,
+                            ),
+                            onPressed:
+                                () => _showResetConfirmationDialog(
+                                  context,
+                                  preset,
+                                ),
                           ),
                           IconButton(
-                            icon: Icon(Icons.edit_square, color: iconColor, size: 24),
+                            icon: Icon(
+                              Icons.edit_square,
+                              color: iconColor,
+                              size: 24,
+                            ),
                             onPressed: () => _editPreset(preset),
                           ),
                         ],
@@ -332,6 +358,4 @@ Color _getTextColor(BuildContext context) {
       ),
     );
   }
-
-
 }

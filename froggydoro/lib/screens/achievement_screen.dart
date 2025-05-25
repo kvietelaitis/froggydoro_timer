@@ -21,8 +21,9 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
 
   Future<void> _loadAchievements() async {
     final achievements = await _databaseService.getAllAchievements();
-    final unlockedAchievements = await _databaseService.getUnlockedAchievements();
-    
+    final unlockedAchievements =
+        await _databaseService.getUnlockedAchievements();
+
     if (mounted) {
       setState(() {
         _achievements = achievements;
@@ -32,58 +33,68 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
   }
 
   bool _isAchievementUnlocked(int achievementId) {
-    return _unlockedAchievements.any((achievement) => 
-      achievement['achievement_id'] == achievementId
+    return _unlockedAchievements.any(
+      (achievement) => achievement['achievement_id'] == achievementId,
     );
   }
 
-  void _showAchievementDetails(BuildContext context, Map<String, dynamic> achievement, bool isUnlocked) {
+  void _showAchievementDetails(
+    BuildContext context,
+    Map<String, dynamic> achievement,
+    bool isUnlocked,
+  ) {
     final name = achievement['name'] as String;
     final description = achievement['description'] as String;
-    
+
     showDialog(
       context: context,
-      builder: (context) => Dialog(
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                isUnlocked ? Icons.emoji_events : Icons.lock_outline,
-                size: 56,
-                color: isUnlocked ? Colors.amber : Colors.grey,
+      builder:
+          (context) => Dialog(
+            backgroundColor: Theme.of(context).colorScheme.surface,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    isUnlocked ? Icons.emoji_events : Icons.lock_outline,
+                    size: 56,
+                    color: isUnlocked ? Colors.amber : Colors.grey,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    name,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: isUnlocked ? Colors.amber[700] : Colors.grey,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    description,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color:
+                          isUnlocked
+                              ? Theme.of(context).colorScheme.onSurface
+                              : Colors.grey,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 24),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('Close'),
+                  ),
+                ],
               ),
-              const SizedBox(height: 16),
-              Text(
-                name,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: isUnlocked ? Colors.amber[700] : Colors.grey,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 12),
-              Text(
-                description,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: isUnlocked ? Theme.of(context).colorScheme.onSurface : Colors.grey,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 24),
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Close'),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
     );
   }
 
@@ -91,13 +102,14 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
 
-    final defaultTextColor = brightness == Brightness.dark ? Color(0xFFB0C8AE) : Color(0xFF586F51);
+    final defaultTextColor =
+        brightness == Brightness.dark ? Color(0xFFB0C8AE) : Color(0xFF586F51);
 
     final backgroundBlockColor =
         brightness == Brightness.dark
             ? const Color(0xFF3A4A38)
             : const Color(0xFFE4E8CD);
-    final achievementBoxColor = 
+    final achievementBoxColor =
         brightness == Brightness.dark
             ? const Color(0xFF63805C)
             : const Color(0xFFC8CBB2);
@@ -120,12 +132,19 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
             ),
             itemBuilder: (context, index) {
               final achievement = _achievements[index];
-              final isUnlocked = _isAchievementUnlocked(achievement['achievement_id']);
+              final isUnlocked = _isAchievementUnlocked(
+                achievement['achievement_id'],
+              );
               final name = achievement['name'] as String;
               final parts = name.split(' ');
 
               return InkWell(
-                onTap: () => _showAchievementDetails(context, achievement, isUnlocked),
+                onTap:
+                    () => _showAchievementDetails(
+                      context,
+                      achievement,
+                      isUnlocked,
+                    ),
                 borderRadius: BorderRadius.circular(12),
                 child: Container(
                   decoration: BoxDecoration(
@@ -146,7 +165,8 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          color: isUnlocked ? Colors.amber[700] : defaultTextColor,
+                          color:
+                              isUnlocked ? Colors.amber[700] : defaultTextColor,
                         ),
                       ),
                       if (parts.length > 1)
@@ -155,7 +175,10 @@ class _AchievementsScreenState extends State<AchievementsScreen> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
-                            color: isUnlocked ? Colors.amber[700] : defaultTextColor,
+                            color:
+                                isUnlocked
+                                    ? Colors.amber[700]
+                                    : defaultTextColor,
                           ),
                         ),
                     ],
