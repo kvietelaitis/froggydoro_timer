@@ -38,36 +38,36 @@ class AudioManager {
   }
 
   Future<void> fadeInMusic({double duration = 3.0}) async {
-  final int token = ++_fadeToken; // New token for this operation
-  double volume = 0.0;
-  int steps = 10;
-  double increment = 1.0 / steps;
+    final int token = ++_fadeToken; // New token for this operation
+    double volume = 0.0;
+    int steps = 10;
+    double increment = 1.0 / steps;
 
-  for (int i = 0; i < steps; i++) {
-    if (_fadeToken != token) return; // Cancel if a new fade started
-    volume += increment;
-    await _audioPlayer.setVolume(volume);
-    await Future.delayed(Duration(milliseconds: (duration * 1000 ~/ steps)));
-  }
-}
-
-Future<void> fadeOutMusic({double duration = 3.0}) async {
-  final int token = ++_fadeToken; // New token for this operation
-  double volume = 1.0;
-  int steps = 10;
-  double decrement = 1.0 / steps;
-
-  for (int i = 0; i < steps; i++) {
-    if (_fadeToken != token) return; // Cancel if a new fade started
-    volume -= decrement;
-    await _audioPlayer.setVolume(volume);
-    await Future.delayed(Duration(milliseconds: (duration * 1000 ~/ steps)));
+    for (int i = 0; i < steps; i++) {
+      if (_fadeToken != token) return; // Cancel if a new fade started
+      volume += increment;
+      await _audioPlayer.setVolume(volume);
+      await Future.delayed(Duration(milliseconds: (duration * 1000 ~/ steps)));
+    }
   }
 
-  if (_fadeToken == token) {
-    await _audioPlayer.stop();
+  Future<void> fadeOutMusic({double duration = 3.0}) async {
+    final int token = ++_fadeToken; // New token for this operation
+    double volume = 1.0;
+    int steps = 10;
+    double decrement = 1.0 / steps;
+
+    for (int i = 0; i < steps; i++) {
+      if (_fadeToken != token) return; // Cancel if a new fade started
+      volume -= decrement;
+      await _audioPlayer.setVolume(volume);
+      await Future.delayed(Duration(milliseconds: (duration * 1000 ~/ steps)));
+    }
+
+    if (_fadeToken == token) {
+      await _audioPlayer.stop();
+    }
   }
-}
 
   Future<void> stopMusic() async {
     await _audioPlayer.stop();

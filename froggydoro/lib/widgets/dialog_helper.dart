@@ -200,27 +200,28 @@ class TimerDialogsHelper {
 
   /// Show an achievement unlocked popup with animation
   static void showAchievementDialog(
-    BuildContext context, 
+    BuildContext context,
     String achievementName,
     String description,
-    String iconPath,
-    {VoidCallback? onClose}
-  ) {
+    String iconPath, {
+    VoidCallback? onClose,
+  }) {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => WillPopScope(
-        onWillPop: () async => false,
-        child: AchievementPopup(
-          achievementName: achievementName,
-          description: description,
-          iconPath: iconPath,
-          onClose: () {
-            Navigator.of(context).pop();
-            onClose?.call();
-          },
-        ),
-      ),
+      builder:
+          (context) => WillPopScope(
+            onWillPop: () async => false,
+            child: AchievementPopup(
+              achievementName: achievementName,
+              description: description,
+              iconPath: iconPath,
+              onClose: () {
+                Navigator.of(context).pop();
+                onClose?.call();
+              },
+            ),
+          ),
     );
   }
 }

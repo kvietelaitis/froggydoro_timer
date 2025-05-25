@@ -16,10 +16,12 @@ class SettingsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
-    final textColor = brightness == Brightness.dark
-        ? const Color(0xFFB0C8AE)
-        : const Color(0xFF586F51);
-    final backgroundBlockColor = brightness == Brightness.dark
+    final textColor =
+        brightness == Brightness.dark
+            ? const Color(0xFFB0C8AE)
+            : const Color(0xFF586F51);
+    final backgroundBlockColor =
+        brightness == Brightness.dark
             ? const Color(0xFF3A4A38)
             : const Color(0xFFE4E8CD);
     return Container(

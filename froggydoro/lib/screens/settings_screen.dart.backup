@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wakelock_plus/wakelock_plus.dart';
-
 import 'package:froggydoro/models/timer_object.dart';
 import 'package:froggydoro/providers/theme_provider.dart';
 import 'package:froggydoro/screens/session_selection_screen.dart';
+import 'package:froggydoro/widgets/settings_tile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:froggydoro/services/database_service.dart';
 import 'package:froggydoro/services/preferences_service.dart';
 import 'package:froggydoro/widgets/dialog_helper.dart';
-import 'package:froggydoro/widgets/settings_tile.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
   final Function(int, int, int, int, int) updateTimer;
 
-  const SettingsScreen({required this.updateTimer, super.key});
+  const SettingsScreen({
+    required this.updateTimer,
+    super.key,
+  });
 
   static Future<String> getAmbience() async {
     final prefs = await SharedPreferences.getInstance();
@@ -177,16 +179,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   Widget buildChangeThemeSetting() {
     final themeMode = ref.watch(themeProvider);
     final themeNotifier = ref.read(themeProvider.notifier);
-
+    
     // Get current theme name
-    String currentThemeName =
-        themeOptions.entries
-            .firstWhere(
-              (entry) =>
-                  entry.value['value'] == _getStringFromThemeMode(themeMode),
-              orElse: () => themeOptions.entries.last,
-            )
-            .key;
+    String currentThemeName = themeOptions.entries
+        .firstWhere(
+          (entry) => entry.value['value'] == _getStringFromThemeMode(themeMode),
+          orElse: () => themeOptions.entries.last,
+        )
+        .key;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,20 +207,19 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           onTap: () {
             _showBottomSheet(
               context: context,
-              children:
-                  themeOptions.entries.map((entry) {
-                    return ListTile(
-                      leading: Icon(entry.value['icon']),
-                      title: Text(entry.key),
-                      onTap: () async {
-                        final newThemeMode = _getThemeModeFromString(
-                          entry.value['value'],
-                        );
-                        await themeNotifier.setThemeMode(newThemeMode);
-                        Navigator.pop(context);
-                      },
+              children: themeOptions.entries.map((entry) {
+                return ListTile(
+                  leading: Icon(entry.value['icon']),
+                  title: Text(entry.key),
+                  onTap: () async {
+                    final newThemeMode = _getThemeModeFromString(
+                      entry.value['value'],
                     );
-                  }).toList(),
+                    await themeNotifier.setThemeMode(newThemeMode);
+                    Navigator.pop(context);
+                  },
+                );
+              }).toList(),
             );
           },
         ),
@@ -252,6 +251,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       case ThemeMode.system:
         return 'system';
     }
+  }
   }
 
   /// Builds the UI for changing the timer preset.

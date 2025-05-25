@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:froggydoro/models/timer_object.dart';
 import 'package:froggydoro/notifications.dart';
 import 'package:froggydoro/screens/settings_screen.dart';
@@ -15,14 +17,9 @@ import 'package:froggydoro/widgets/music_Manager.dart';
 import 'package:froggydoro/widgets/timer_button_row.dart';
 
 class MainScreen extends StatefulWidget {
-  final ValueChanged<ThemeMode> onThemeModeChanged;
   final Notifications notifications;
 
-  const MainScreen({
-    super.key,
-    required this.onThemeModeChanged,
-    required this.notifications,
-  });
+  const MainScreen({super.key, required this.notifications});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -641,10 +638,7 @@ class _MainScreenState extends State<MainScreen>
             ),
           ),
           // Settings View
-          SettingsScreen(
-            updateTimer: _updateSettings,
-            onThemeModeChanged: widget.onThemeModeChanged,
-          ),
+          SettingsScreen(updateTimer: _updateSettings),
         ],
       ),
       bottomNavigationBar: Theme(

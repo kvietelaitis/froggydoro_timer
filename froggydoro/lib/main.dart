@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:froggydoro/notifications.dart';
+import 'package:froggydoro/providers/theme_provider.dart';
 import 'package:froggydoro/screens/main_screen.dart';
 import 'package:froggydoro/services/database_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,7 +44,6 @@ void main() async {
     } else {
       // Fall back to default values
       final workTime = prefs.getInt('workMinutes') ?? 25;
-      final breakTime = prefs.getInt('breakMinutes') ?? 5;
       await prefs.setInt('totalSeconds', workTime * 60);
       await prefs.setInt('remainingTime', workTime * 60);
     }
@@ -56,55 +57,18 @@ void main() async {
   // Mark as active again
   prefs.setBool('wasActive', true);
 
-  runApp(MyApp(notifications: notifications));
+  runApp(ProviderScope(child: MyApp(notifications: notifications)));
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends ConsumerWidget {
   final Notifications notifications;
 
   const MyApp({super.key, required this.notifications});
 
   @override
-  State<MyApp> createState() => _MyAppState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeProvider);
 
-class _MyAppState extends State<MyApp> {
-  ThemeMode _themeMode = ThemeMode.system;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadThemeMode();
-  }
-
-  Future<void> _loadThemeMode() async {
-    final prefs = await SharedPreferences.getInstance();
-    final themeMode = prefs.getString('themeMode') ?? 'system';
-    setState(() {
-      _themeMode = _getThemeModeFromString(themeMode);
-    });
-  }
-
-  ThemeMode _getThemeModeFromString(String themeMode) {
-    switch (themeMode) {
-      case 'light':
-        return ThemeMode.light;
-      case 'dark':
-        return ThemeMode.dark;
-      case 'system':
-      default:
-        return ThemeMode.system;
-    }
-  }
-
-  void _onThemeModeChanged(ThemeMode mode) {
-    setState(() {
-      _themeMode = mode;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: navigatorKey, // Ensure navigatorKey is set
       debugShowCheckedModeBanner: false,
@@ -207,11 +171,8 @@ class _MyAppState extends State<MyApp> {
           contentTextStyle: TextStyle(color: Color(0xFFB0C8AE), fontSize: 16),
         ),
       ),
-      themeMode: _themeMode,
-      home: MainScreen(
-        onThemeModeChanged: _onThemeModeChanged,
-        notifications: widget.notifications,
-      ),
+      themeMode: themeMode,
+      home: MainScreen(notifications: notifications),
     );
   }
 }
