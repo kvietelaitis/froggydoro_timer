@@ -73,10 +73,10 @@ class MainTimerSection extends ConsumerWidget {
         SizedBox(height: screenHeight * 0.02),
         buildButtons(context),
         SizedBox(height: screenHeight * 0.01),
-        ElevatedButton(
+        /*         ElevatedButton(
           onPressed: onTestDurations,
           child: const Text('Load Test Durations'),
-        ),
+        ), */
       ],
     );
   }
