@@ -2,7 +2,7 @@ name: froggydoro
 description: "a pomodoro timer with a froggy."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -39,7 +39,7 @@ dependencies:
   shared_preferences: ^2.0.8
   numberpicker: ^2.1.2
   flutter_settings_screens: ^0.3.4
-  flutter_launcher_icons: ^0.13.1
+  flutter_launcher_icons: ^0.14.4
   flutter_local_notifications: ^18.0.1
   wakelock_plus: ^1.2.10
   permission_handler: ^11.4.0
@@ -71,13 +71,13 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
   assets:
     - assets/icon.png
+    - assets/icon_monochrome.png
     - assets/clock.png
     - assets/Sliders.png
     - assets/default_froggy_transparent.png
@@ -132,3 +132,8 @@ flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/icon.png"
+  min_sdk_android: 21
+  adaptive_icon_background: "#00000000"
+  adaptive_icon_foreground: "assets/icon.png"
+  adaptive_icon_foreground_inset: 25
+  adaptive_icon_monochrome: "assets/icon_monochrome.png"
